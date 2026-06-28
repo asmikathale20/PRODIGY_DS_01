@@ -3,6 +3,23 @@ import matplotlib.pyplot as plt
 
 # Load dataset
 df = pd.read_csv("data/titanic.csv")
+print("=" * 40)
+print("      TITANIC DATASET SUMMARY")
+print("=" * 40)
+
+print(f"Total Records : {len(df)}")
+print(f"Male          : {(df['Sex'] == 'male').sum()}")
+print(f"Female        : {(df['Sex'] == 'female').sum()}")
+
+print(f"Average Age   : {df['Age'].mean():.2f}")
+print(f"Minimum Age   : {df['Age'].min()}")
+print(f"Maximum Age   : {df['Age'].max()}")
+
+print("=" * 40)
+
+# ----------------------------
+# Gender Distribution
+# ----------------------------
 
 # ----------------------------
 # Gender Distribution
@@ -12,16 +29,28 @@ gender_counts = df["Sex"].value_counts()
 
 plt.figure(figsize=(7,5))
 
-plt.bar(
+bars = plt.bar(
     gender_counts.index,
     gender_counts.values,
     color=["royalblue", "deeppink"],
     edgecolor="black"
 )
 
+# Display count above each bar
+for bar in bars:
+    height = bar.get_height()
+    plt.text(
+        bar.get_x() + bar.get_width()/2,
+        height + 5,
+        f"{int(height)}",
+        ha="center",
+        fontsize=11,
+        fontweight="bold"
+    )
+
 plt.title("Gender Distribution", fontsize=16, fontweight="bold")
-plt.xlabel("Gender", fontsize=12)
-plt.ylabel("Count", fontsize=12)
+plt.xlabel("Gender")
+plt.ylabel("Count")
 plt.grid(axis="y", linestyle="--", alpha=0.5)
 
 plt.tight_layout()
